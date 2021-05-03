@@ -1,0 +1,18 @@
+﻿<div id="sidebar">
+    <h3>Categories</h3>
+    <ul class="sidebar_menu">
+        @foreach (var cat in ViewBag.catList)
+        {
+            <li><a href=@Url.Action("proByCat","Product",new {ID=cat.ID})>@cat.Name</a></li>
+        }
+    </ul>
+    <h3>Bản tin</h3>
+    <p>Để lại địa chỉ email của bạn tại đây để nhận những thông tin ưu đãi và các phần quà giá trị khác. </p>
+    <div id="newsletter">
+        <form action="#" method="get">
+            <input type="text" value="Địa chỉ Email" name="email_newsletter" id="email_newsletter" title="email_newsletter" onfocus="clearText(this)" onblur="clearText(this)" class="txt_field" />
+            <input type="submit" name="subscribe" value="Gửi" alt="Subscribe" id="subscribebtn" title="Subscribe" class="subscribebtn" />
+        </form>
+        <div class="cleaner"></div>
+    </div>
+</div>

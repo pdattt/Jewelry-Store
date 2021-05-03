@@ -1,0 +1,9 @@
+﻿@{
+    var list = ViewBag.catList;
+    <ul>
+        @foreach (var cat in list)
+        {
+            <li><a href=@Url.Action("proByCat","Product",new {ID=cat.ID})> @cat.Name </a></li>
+        }
+    </ul>
+}

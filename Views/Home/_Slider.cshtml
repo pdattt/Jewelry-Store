@@ -1,0 +1,16 @@
+﻿<div id="SlideItMoo_outer">
+    <div id="SlideItMoo_inner">
+        <div id="SlideItMoo_items">
+            @{
+                foreach (var product in ViewBag.proList)
+                {
+                    <div class="SlideItMoo_element">
+                        <a href=@Url.Action("ProductDetail", "Product", new { ID = product.ID }) target="_parent">
+                            <img src=@Url.Content(@product.Image) @product.ID height="120" width="160" />
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>

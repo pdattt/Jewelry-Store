@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header {
+    <link href="~/css/userform.css" rel="stylesheet" />
+    <link href="~/css/validation.css" rel="stylesheet" />
+
+    <script src="~/js/jquery.min.js"></script>
+}
+
+@section space{
+    <div class="cleaner h20"></div>
+}
+
+@section menuBar{
+    <div id="templatemo_menu" class="ddsmoothmenu">
+        <ul>
+            <li><a href=@Url.Action("Index", "Home")>Home</a></li>
+            <li>
+                <a href=@Url.Action("Products", "Product")>Products</a>
+                @{
+                    Html.RenderAction("_subMenu", "Home");
+                }
+            </li>
+            <li><a href=@Url.Action("About", "Home")>About</a></li>
+            <li><a href=@Url.Action("FAQs", "Home")>FAQs</a></li>
+            <li><a href=@Url.Action("Checkout", "Home")>Checkout</a></li>
+            <li><a href=@Url.Action("Contact", "Home")>Contact</a></li>
+        </ul>
+        <br style="clear: left" />
+    </div>
+}
+
+<div id="content">
+
+    @model Project.Models.Register
+    @using (Html.BeginForm("Register", "User", FormMethod.Post))
+    {
+
+        <div class="container">
+            <h2>Đăng ký</h2>
+            @*@Html.ValidationSummary()*@
+            <div class="form-group">
+                <label for="name">Tên người dùng:</label>
+                @Html.ValidationMessageFor(m => m.Name, "")
+                @*<input type="text" class="form-control" id="name" placeholder="Enter Usename" name="name">*@
+                @Html.TextBoxFor(m => m.Name, new { @type = "text", @class = "form-control", @id = "name", @placeholder = "Nhập tên tài khoản", @name = "name" })
+            </div>
+            <div class="form-group">
+                <label for="pwd">Mật khẩu:</label>
+                @Html.ValidationMessageFor(m => m.Password, "")
+                @*<input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">*@
+                @Html.TextBoxFor(m => m.Password, new { @type = "password", @class = "form-control", @id = "pwd", @placeholder = "Nhập mật khẩu", @name = "pwd" })
+            </div>
+            <div class="form-group">
+                <label for="confpwd">Xác nhận mật khẩu:</label>
+                @Html.ValidationMessageFor(m => m.ConfirmPass, "")
+                @*<input type="password" class="form-control" id="confpwd" placeholder="Confim password" name="confpwd">*@
+                @Html.TextBoxFor(m => m.ConfirmPass, new { @type = "password", @class = "form-control", @id = "confpwd", @placeholder = "Xác nhận mật khẩu", @name = "confpwd" })
+            </div>
+            <div class="form-group">
+                <label for="address">Địa chỉ:</label>
+                @Html.ValidationMessageFor(m => m.Address, "")
+                @*<input type="text" class="form-control" id="address" placeholder="Enter Address" name="address">*@
+                @Html.TextBoxFor(m => m.Address, new { @type = "text", @class = "form-control", @id = "address", @placeholder = "Nhập địa chỉ", @name = "address" })
+            </div>
+            <div class="form-group">
+                <label for="phone">Số điện thoại:</label>
+                @Html.ValidationMessageFor(m => m.Phone, "")
+                @*<input type="text" class="form-control" id="phone" placeholder="Enter Phone" name="phone">*@
+                @Html.TextBoxFor(m => m.Phone, new { @type = "text", @class = "form-control", @id = "phone", @placeholder = "Nhập số điện thoại", @name = "phone" })
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                @Html.ValidationMessageFor(m => m.Email, "")
+                @*<input type="email" class="form-control" id="email" placeholder="Enter Email" name="email">*@
+                @Html.TextBoxFor(m => m.Email, new { @type = "text", @class = "form-control", @id = "email", @placeholder = "Nhập email", @name = "email" })
+            </div>
+            <button type="submit" class="btn btn-default">Đăng ký</button>
+
+        </div>
+    }
+</div>

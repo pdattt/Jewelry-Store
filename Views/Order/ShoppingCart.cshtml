@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "ShoppingCart";
+}
+
+@section header{
+    <link href="~/css/templatemo_style.css" rel="stylesheet" />
+
+    <script src="~/js/jquery.min.js"></script>
+}
+
+@section menuBar{
+    <div id="templatemo_menu" class="ddsmoothmenu">
+        <ul>
+            <li><a href=@Url.Action("Index", "Home")>Home</a></li>
+            <li>
+                <a href=@Url.Action("Products", "Product")>Products</a>
+                @{
+                    Html.RenderAction("_subMenu", "Home");
+                }
+            </li>
+            <li><a href=@Url.Action("About", "Home")>About</a></li>
+            <li><a href=@Url.Action("FAQs", "Home")>FAQs</a></li>
+            <li><a href=@Url.Action("Checkout", "Order")>Checkout</a></li>
+            <li><a href=@Url.Action("Contact", "Home")>Contact</a></li>
+        </ul>
+        <br style="clear: left" />
+    </div>
+}
+
+@section space{
+    <div class="cleaner h20"></div>
+}
+
+<div id="content">
+
+    @if (Model.Count > 0)
+    {
+        <table width="700px" cellspacing="0" cellpadding="5">
+            <tr bgcolor="#CCCCCC">
+                <th width="220" align="left">Hình ảnh </th>
+                <th width="180" align="left">Tên sản phẩm </th>
+                <th width="100" align="center">Số lượng </th>
+                <th width="60" align="right">Đơn giá </th>
+                <th width="60" align="right">Thành tiền </th>
+                <th width="90"> </th>
+
+            </tr>
+            @{
+                foreach (var order in Model)
+                {
+                    <tr>
+                        <td><img src=@Url.Content(order.Image) width=200 height=150 /></td>
+                        <td>@order.Name</td>
+                        <td align="center"><input id="amount" type="text" value=@order.Amount style="width: 20px; text-align: right" onchange="setTotalPrice()" /> </td>
+                        <td align="right" id="price">@order.Price.ToString("#,##") </td>
+                        <td align="right" id="total"> @((order.Price * order.Amount).ToString("#,##")) </td>
+                        <td align="center"> <a href=@Url.Action("RemoveOrder", "Order", new { ID = order.Detail_ID, currentpage = ViewBag.Title, list = Model})><img src="~/images/remove_x.gif" alt="remove" /><br />Remove</a> </td>
+                    </tr>
+
+                }
+            }
+            <tr>
+                <td align="right" style="background:#ccc; font-weight:bold"> Tổng cộng </td>
+                @{
+                    int total = 0;
+                    foreach (var order in Model)
+                    {
+                        total += (order.Price * order.Amount);
+
+                    }
+                    <td style="background:#ccc; font-weight:bold"> </td>
+                    <td style="background:#ccc; font-weight:bold"> </td>
+                    <td style="background:#ccc; font-weight:bold"> </td>
+
+                    <td align="right" style="background:#ccc; font-weight:bold">@total.ToString("#,##") </td>
+                    <td style="background:#ccc; font-weight:bold"> </td>
+
+                }
+            </tr>
+        </table>
+        <div style="float:right; width: 215px; margin-top: 20px;">
+
+            <div class="checkout"><a href=@Url.Action("Checkout", "Order") class="more">Thanh toán</a></div>
+            <div class="cleaner h20"></div>
+            <div class="continueshopping"><a href=@Url.Action("Index", "Home") class="more">Tiếp tục mua hàng</a></div>
+            @*<div class="continueshopping"><a href="javascript:history.back()" class="more">Continue Shopping</a></div>*@
+
+        </div>
+    }
+    else
+    {
+        <h1> Giỏ hàng trống!! </h1>
+    }
+
+
+</div>

@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewBag.Title = "ProductDetail";
+}
+
+@section header{
+    <link href="~/css/lightbox.css" rel="stylesheet" />
+    <link href="~/css/templatemo_style.css" rel="stylesheet" />
+
+    <script src="~/js/builder.js"></script>
+    <script src="~/js/effects.js"></script>
+    <script src="~/js/jquery.min.js"></script>
+    <script src="~/js/lightbox2.js"></script>
+    <script src="~/js/prototype.js"></script>
+
+    <link rel="stylesheet" href="~/css/lightbox.css" type="text/css" media="screen" />
+    <script src="~/js/prototype.js" type="text/javascript"></script>
+    <script src="~/js/scriptaculous.js?load=effects,builder" type="text/javascript"></script>
+    <script src="~/js/lightbox2.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+}
+
+@section menuBar{
+    <div id="templatemo_menu" class="ddsmoothmenu">
+
+        <ul onload="changeClass()">
+            <li><a href=@Url.Action("Index", "Home")>Home</a></li>
+            <li>
+                <a href=@Url.Action("Products", "Product") class="selected">Products</a>
+                @{
+                    Html.RenderAction("_subMenu", "Home");
+                }
+            </li>
+            <li><a href=@Url.Action("About", "Home")>About</a></li>
+            <li><a href=@Url.Action("FAQs", "Home")>FAQs</a></li>
+            <li><a href=@Url.Action("Checkout", "Order")>Checkout</a></li>
+            <li><a href=@Url.Action("Contact", "Home")>Contact</a></li>
+        </ul>
+        <br style="clear: left" />
+    </div>
+}
+
+@section space{
+    <div class="cleaner h20"></div>
+}
+
+<div class="cleaner h20"></div>
+<div id="templatemo_main_top"></div>
+
+<div id="content">
+    <h2>Thông tin sản phẩm</h2>
+    <div class="col col_13">
+        <a rel="lightbox[portfolio]" href=@Url.Content(Model.Image) title="Lady Shoes"><img src=@Url.Content(Model.Image) alt=Model.ID height="200" width="250" /></a>
+    </div>
+    <div class="col col_13 no_margin_right">
+        <table>
+            <tr>
+                <td height="30">Tên sản phẩm:</td>
+                <td>@Model.Name</td>
+            </tr>
+            <tr>
+                <td height="30" width="160">Giá:</td>
+                <td>@Model.Price.ToString("#,##") VND</td>
+            </tr>
+            <tr>
+                <td height="30">Tình trạng:</td>
+                @if (Model.Quantity != 0)
+                {
+                    <td>Còn hàng</td>
+                }
+                else
+                {
+                    <td>Hết hàng</td>
+                }
+            </tr>
+            <tr>
+                <td height="30">Nhà chế tạo:</td>
+                <td>Apple</td>
+            </tr>
+            <tr>
+                <td height="30">Số lượng</td>
+                @if (Model.Quantity != 0)
+                {
+                    <td>
+                        <input type="text" name="quantity" id="quantity" value=1 style="width: 20px; text-align: right" runat="server" />
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Hết hàng
+                    </td>
+                }
+            </tr>
+        </table>
+        <div class="cleaner h20"></div>
+        @if (Model.Quantity != 0)
+        {
+            <a id="add" href=@Url.Action("AddOrder", "Order", new { productid = Model.ID }) class="add_to_cart">Thêm vào giỏ hàng</a>
+            <script>
+                var quantity = document.getElementById("quantity").toString();
+                var id = toString(@Model.ID);
+
+                //$(document).ready(function () {
+
+                //    $("a").click(function () {
+
+              
+                //        $("#add").attr("href", "Order/AddOrder?ProductID='" + id + "&&" + "Quantity =" + quantity);
+                //    });
+                //});
+            </script>
+        }
+        else
+        {
+            <h3> Hết hàng </h3>
+        }
+    </div>
+    <div class="cleaner h20"></div>
+
+    <h5><strong>Product Description</strong></h5>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur semper quam sit amet turpis rhoncus id venenatis tellus sollicitudin. Fusce ullamcorper, dolor non mollis pulvinar, turpis tortor commodo nisl, et semper lectus augue blandit tellus. Quisque id bibendum libero.</p>
+
+    <div class="cleaner h50"></div>
+
+    <h4>Sản phẩm liên quan</h4>
+
+    @{
+        int i = 0;
+        foreach (var product in ViewBag.proList)
+        {
+            if (product.ID != Model.ID)
+            {
+                if (product.CategoryID == Model.CategoryID)
+                {
+                    if (i == 2)
+                    {
+                        <div class="col col_14 product_gallery no_margin_right">
+                            <a href=@Url.Action("ProductDetail", "Product", new { ID = product.ID })><img src=@Url.Content(@product.Image) alt=@product.ID height="150" width="200" /></a>
+                            <h3>@product.Name</h3>
+                            <p class="product_price">@product.Price.ToString("#,##") VND</p>
+                            <a href=@Url.Action("ShoppingCart", "Home") class="add_to_cart">Thêm vào giỏ hàng</a>
+                        </div>
+                        <div class="cleaner"></div>
+                        break;
+                    }
+                    else
+                    {
+                        <div class="col col_14 product_gallery">
+                            <a href=@Url.Action("ProductDetail", "Product", new { ID = product.ID })><img src=@Url.Content(@product.Image) alt=@product.ID height="150" width="200" /></a>
+                            <h3>@product.Name</h3>
+                            <p class="product_price">@product.Price.ToString("#,##") VND</p>
+                            <a href=@Url.Action("ShoppingCart", "Home") class="add_to_cart">Thêm vào giỏ hàng</a>
+                        </div>
+                        i++;
+                    }
+                }
+            }
+        }
+    }
+    <a href=@Url.Action("proByCat","Product",new {ID=Model.CategoryID}) class="more float_r">Xem tất cả</a>
+</div>
+
+

@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header {
+    <link href="~/css/userform.css" rel="stylesheet" />
+    <link href="~/css/validation.css" rel="stylesheet" />
+
+    <script src="~/js/jquery.min.js"></script>
+}
+
+@section space{
+    <div class="cleaner h20"></div>
+}
+
+@section menuBar{
+    <div id="templatemo_menu" class="ddsmoothmenu">
+        <ul>
+            <li><a href=@Url.Action("Index", "Home")>Home</a></li>
+            <li>
+                <a href=@Url.Action("Products", "Product")>Products</a>
+                @{
+                    Html.RenderAction("_subMenu", "Home");
+                }
+            </li>
+            <li><a href=@Url.Action("About", "Home")>About</a></li>
+            <li><a href=@Url.Action("FAQs", "Home")>FAQs</a></li>
+            <li><a href=@Url.Action("Checkout", "Home")>Checkout</a></li>
+            <li><a href=@Url.Action("Contact", "Home")>Contact</a></li>
+        </ul>
+        <br style="clear: left" />
+    </div>
+}
+
+<div id="content">
+
+    @model Project.Models.Login
+    @using (Html.BeginForm("Login", "User", FormMethod.Post))
+    {
+
+        <div class="container">
+            <h2>Đăng nhập</h2>
+            <div class="form-group">
+                <label for="name">Địa chỉ email:</label>
+                @Html.ValidationMessageFor(m => m.Email, "x")
+                @*<input type="text" class="form-control" id="name" placeholder="Enter Usename" name="name">*@
+                @Html.TextBoxFor(m => m.Email, new { @type = "text", @class = "form-control", @id = "email", @placeholder = "Nhập địa chỉ email", @name = "name" })
+            </div>
+            <div class="form-group">
+                <label for="pwd">Mật khẩu:</label>
+                @Html.ValidationMessageFor(m => m.Password, "x")
+                @*<input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pwd">*@
+                @Html.TextBoxFor(m => m.Password, new { @type = "password", @class = "form-control", @id = "pwd", @placeholder = "Nhập mật khẩu", @name = "pwd" })
+            </div>
+            <div class="checkbox">
+                <label><input type="checkbox" name="remember"> Ghi nhớ đăng nhập</label>
+            </div>
+
+            <button type="submit" class="btn btn-default">Đăng nhập</button>
+            @Html.ValidationSummary()
+
+        </div>
+    }
+</div>

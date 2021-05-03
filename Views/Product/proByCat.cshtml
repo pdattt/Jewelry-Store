@@ -1,0 +1,115 @@
+﻿
+@{
+    ViewBag.Title = "proByCat";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    <link href="~/css/styles.css" rel="stylesheet" />
+    <link href="~/css/templatemo_style.css" rel="stylesheet" />
+
+    <script src="~/js/jquery.min.js"></script>
+
+    <script src="~/Scripts/mootools-1.2-more.js"></script>
+    <script src="~/Scripts/mootools-1.2.1-core.js"></script>
+    <script src="~/Scripts/slideitmoo-1.1.js"></script>
+}
+
+@section menuBar{
+    <div id="templatemo_menu" class="ddsmoothmenu">
+        <ul>
+            <li><a href=@Url.Action("Index", "Home")>Home</a></li>
+            <li>
+                <a href=@Url.Action("Products", "Product") class="selected">Products</a>
+                @{
+                    Html.RenderAction("_subMenu", "Home");
+                }
+            </li>
+            <li><a href=@Url.Action("About", "Home")>About</a></li>
+            <li><a href=@Url.Action("FAQs", "Home")>FAQs</a></li>
+            <li><a href=@Url.Action("Checkout", "Order")>Checkout</a></li>
+            <li><a href=@Url.Action("Contact", "Home")>Contact</a></li>
+        </ul>
+        <br style="clear: left" />
+    </div>
+}
+
+@section space{
+    <div class="cleaner h20"></div>
+}
+
+@section slider{
+    <script language="javascript" type="text/javascript">
+        window.addEvents({
+            'domready': function () {
+                /* thumbnails example , div containers */
+                new SlideItMoo({
+                    overallContainer: 'SlideItMoo_outer',
+                    elementScrolled: 'SlideItMoo_inner',
+                    thumbsContainer: 'SlideItMoo_items',
+                    itemsVisible: 5,
+                    elemsSlide: 2,
+                    duration: 200,
+                    itemsSelector: '.SlideItMoo_element',
+                    itemWidth: 171,
+                    showControls: 1
+                });
+            },
+
+        });
+
+        function clearText(field) {
+            if (field.defaultValue == field.value) field.value = '';
+            else if (field.value == '') field.value = field.defaultValue;
+        }
+    </script>
+}
+
+
+@section _Slider{
+    <div id="product_slider">
+        @{
+            Html.RenderAction("_Slider", "Home");
+        }
+        <div class="cleaner"></div>
+    </div>
+
+}
+<div id="content">
+    @{
+        int i = 0;
+
+        <h2>@Model.Name</h2>
+
+        foreach (var product in ViewBag.proList)
+        {
+            if (product.CategoryID == Model.ID)
+            {
+                if (i == 2)
+                {
+                    <div class="col col_14 product_gallery no_margin_right">
+                        <a href=@Url.Action("ProductDetail", "Product", new { ID = product.ID })><img src=@Url.Content(@product.Image) alt=@product.ID height="150" width="200" /></a>
+                        <h3>@product.Name</h3>
+                        <p class="product_price">@product.Price.ToString("#,##") VND</p>
+                        <a href=@Url.Action("AddOrder", "Order", new { productid = product.ID }) class="add_to_cart">Thêm vào giỏ hàng</a>
+                    </div>
+                    i = 0;
+                }
+                else
+                {
+                    <div class="col col_14 product_gallery">
+                        <a href=@Url.Action("ProductDetail", "Product", new { ID = product.ID })><img src=@Url.Content(@product.Image) alt=@product.ID height="150" width="200" /></a>
+                        <h3>@product.Name</h3>
+                        <p class="product_price">@product.Price.ToString("#,##") VND</p>
+                        <a href=@Url.Action("AddOrder", "Order", new { productid = product.ID }) class="add_to_cart">Thêm vào giỏ hàng</a>
+                    </div>
+                    i++;
+                }
+            }
+
+        }
+    }
+    <div class="cleaner h50"></div>
+
+    <div class="cleaner"></div>
+</div>

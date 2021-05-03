@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "Success";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header {
+    <link href="~/css/register.css" rel="stylesheet" />
+}
+
+@section space{
+    <div class="cleaner h20"></div>
+}
+
+@section menuBar{
+    <div id="templatemo_menu" class="ddsmoothmenu">
+        <ul>
+            <li><a href=@Url.Action("Index", "Home")>Home</a></li>
+            <li>
+                <a href=@Url.Action("Products", "Product")>Products</a>
+                @{
+                    Html.RenderAction("_subMenu", "Home");
+                }
+            </li>
+            <li><a href=@Url.Action("About", "Home")>About</a></li>
+            <li><a href=@Url.Action("FAQs", "Home")>FAQs</a></li>
+            <li><a href=@Url.Action("Checkout", "Home")>Checkout</a></li>
+            <li><a href=@Url.Action("Contact", "Home")>Contact</a></li>
+        </ul>
+        <br style="clear: left" />
+    </div>
+}
+
+
+<div id="content">
+    <p><b> Đăng ký thành công !!</b></p>
+</div>
